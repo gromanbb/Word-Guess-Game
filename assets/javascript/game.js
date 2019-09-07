@@ -3,6 +3,7 @@
 
 var disneyMovies = ["ZOOTOPIA", "MOANA", "TANGLED", "ALLADIN", "BRAVE", "INCREDIBLES", "MULAN", "RATATOUILLE", "HERCULES", "CINDERELLA", "POCAHONTAS", "ARISTOCATS", "PINOCCHIO", "FANTASIA", "MALEFICENT", "BAMBI", "PLANES", "FROZEN", "TARZAN"]
 
+var score= 0;
 var wins = 0;
 var displayWins = [];
 
@@ -34,6 +35,12 @@ var strEqualLetters = "";
 // ==============================================================================
 function displayStats() {
     console.log("displayStats()--> Function executed");
+
+    document.querySelector("#pWins").innerHTML = "<h5>Wins: " + wins + "</h5>";
+    document.querySelector("#pCurrentWord").innerHTML = "<h5>Current Word:  " + strGuessedMovie + "</h5>";
+    document.querySelector("#pGuessesLeft").innerHTML = "<h5>Number of guesses remaining: " + numGuessesLeft + "</h5>";
+    document.querySelector("#pLettersGuessed").innerHTML = "<h5>Letters already guessed: " + wins + "</h5>";
+
 }
 
 function pickRandomMovie() {
