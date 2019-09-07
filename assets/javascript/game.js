@@ -3,8 +3,10 @@
 var wins = 0;
 var displayMovie = [];
 var numGuessesLeft = 12;
+var maxGuessedLetters = 12;
 var guessedLetters = [];
-// ojo
+var arrLength = 0;
+var diffLetters = 0;
 var displayWins = [];
 var displayGuessesLeft = [];
 var displayGuessedLetters = [];
@@ -16,169 +18,146 @@ var disneyMovies = ["ZOOTOPIA", "MOANA", "TANGLED", "ALLADIN"];
 var compMovie = "";
 var compIndex = 0;
 var userLetter = "";
-var guessedMovie = "";
+var isCapsLetter = false;
+var guessedMovie = [];
+var strGuessedMovie = "";
+var strGuessedLetters = "";
+var strEqualLetters = "";
 
-// ojo
-var isFirstGame = true;
 
 
+// Retrieve unique characters from string
+function getUniqueCharacters(str) {
+    var result = {};
 
-// FUNCTIONS
-// ==============================================================================
-function displayStats() {
-    // ojo
-    console.log("displayStats() executed");
-    alert("Display Stats...");
+    for (var i = 0; i < str.length; i++) {
+        if (str[i] != '_') result[str[i]] = 1;
+    }
+    return Object.keys(result).join("");
 }
 
-function pickRandomMovie() {
-    // ojo
-    console.log("pickRandomMovie() executed");
-    alert("Pick Random Movie...");
-
-    var compIndex = Math.floor(Math.random() * disneyMovies.length);
-    var compMovie = disneyMovies[compIndex];
-    console.log("compIndex: " + compIndex);
-    console.log("Picked Movie: " + compMovie);
-    console.log("compMovie length " + compMovie.length);
-
-    // ojo Display/Render
-    for (var i = 0; i < compMovie.length; i++) {
-        displayMovie[i] = "_";
-        console.log("displayMovie[" + i + "]: " + displayMovie[i]);
+function isLetter(letterAZ) {
+    if (letterAZ === "A" || letterAZ === "B" || letterAZ === "C" || letterAZ === "D" || letterAZ === "E" || 
+        letterAZ === "F" || letterAZ === "G" || letterAZ === "H" || letterAZ === "I" || letterAZ === "J" || 
+        letterAZ === "K" || letterAZ === "L" || letterAZ === "M" || letterAZ === "N" || letterAZ === "O" || 
+        letterAZ === "P" || letterAZ === "Q" || letterAZ === "R" || letterAZ === "S" || letterAZ === "T" || 
+        letterAZ === "U" || letterAZ === "V" || letterAZ === "W" || letterAZ === "X" || letterAZ === "Y" || 
+        letterAZ === "Z") {
+        return true;
+    } else {
+        return false;
     }
-    
-    console.log("numGuessesLeft" + numGuessesLeft);
-
-    // Loop until there are no more guesses
-    for (var z = numGuessesLeft; z > 0; z--) {
-        // Validate keyed letter
-        document.onkeyup = function(event) {
-            userLetter = event.key.toUpperCase();
-            console.log("userLetter: " + userLetter);
-/*
-            // Validate that user keyed only letters
-            if (!userLetter.value.match(/^[A-Z]+$/)) {
-                alert('Only letters are allowed. Try again!');
-                // ojo
-                console.log("Try again!");
-            } else {
-                */
-                for (var i = 0; i < compMovie.length; i++) {
-                    if (userLetter === compMovie[i]) {
-                        guessedMovie = guessedMovie + userLetter;
-                        console.log("guessedMovie: " + guessedMovie);
-                        displayMovie[i] = userLetter;
-                        console.log("displayMovie[i]: " + displayMovie[i] + "/ i:" + i);
-
-                        //ojo check if already in guessedLetters???
-                    } else {
-                        // numGuessesLeft--;
-                        console.log("numGuessesLeft: " + numGuessesLeft);
-
-                        guessedLetters.push(userLetter);
-                        displayGuessedLetters.push(userLetter);
-
-                        // ojo
-                        for (w = 0; w > guessedLetters.length; w++) {
-                            console_log("guessedLetters[w]: " + guessedLetters[w] + "/ w:" + w);
-
-                        }
-    
-                        // ojo Display changes here????
-                        // displayStats();                        
-                    }            
-                }
-            // }
-        }
-    }
-
 }
 
-function validateGuessedMovie() {
-    // ojo
-    console.log("validateGuessedMovie() executed");
-    alert("Validate Guessed Movie...");
- 
-/*
-    if (guessedMovie === compMovie ) {
-        wins++;
-        numGuessesLeft = 12;
-        userLetter = "";
-        guessedMovie = "";
-        compIndex = 0;
-        compMovie = "";
-        displayMovie = "";  // ojo how to initialize an array???
-        displayMovie = [];
-        guessedLetters = [];
-        displayGuessesLeft = [];
-        displayGuessedLetters = [];
 
-    }
+/*
+compIndex = Math.floor(Math.random() * disneyMovies.length);
+compMovie = disneyMovies[compIndex];
+console.log("compIndex: " + compIndex);
+console.log("Picked Movie: " + compMovie);
+console.log("compMovie length " + compMovie.length);
 */
+
+// ojo Debug!!!
+compMovie = "MOANA";
+console.log("Picked Movie: " + compMovie);
+console.log("compMovie length " + compMovie.length);
+
+for (var i = 0; i < compMovie.length; i++) {
+    displayMovie[i] = "_";
+    console.log("displayMovie[" + i + "]: " + displayMovie[i]);
+    guessedMovie[i] = "_";
+    console.log("guessedMovie[" + i + "]: " + guessedMovie[i]);
 }
 
-function celebrateWin() {
-    // ojo
-    console.log("celebrateWin() executed");
-    alert("Celebrate Win!!!");
-}
+console.log("numGuessesLeft: " + numGuessesLeft);
 
-function hangman() {
+document.onkeyup = function (event) {
+    console.log("onkeyup event!");
 
-    displayStats();
-    //ojo
-    console.log("Invoked displayStats() from hangman()...");
-    alert("Invoked displayStats() from hangman()...");
+    userLetter = event.key.toUpperCase();
+    console.log("userLetter: " + userLetter);
 
-    pickRandomMovie();
-    // ojo
-    console.log("Invoked pickRandomMovie() from hangman()...");
-    alert("Invoked pickRandomMovie() from hangman()...");
+    // Validate that user keyed only letters
+    isCapsLetter = isLetter(userLetter);
+    console.log("isCapsLetter: " + isCapsLetter + "; isLetter: " + isLetter + "; userLetter: " + userLetter);
 
-    validateGuessedMovie();
-    // ojo
-    console.log("Invoked validateGuessedMovie() from hangman()...");
-    alert("Invoked validateGuessedMovie() from hangman()...");
+    if (!isCapsLetter) {
+        console.log("Only letters are allowed. Try again!");
+    } else {
 
-    // Execute hangman() recursively until game is over
-    if (wins !== 0) {
-        // ojo
-        console.log("Invoked hangman() after winning...");
-        alert("Invoked hangman() after winning...");
+        for (var i = 0; i < compMovie.length; i++) {
+            console.log("For loop i: " + i);
+            console.log("userLetter: " + userLetter + "; compMovie[i]: " + compMovie[i]);
 
-        //ojo
-        celebrateWin();
-        console.log("Invoked celebrateWin() after winning...");
-        alert("Invoked celebrateWin() after winning...");
+            if (userLetter === compMovie[i]) {
+                guessedMovie[i] = userLetter;
+                console.log("guessedMovie[i]: " + guessedMovie[i] + "; i:" + i);
+                displayMovie[i] = userLetter;
+                console.log("displayMovie[i]: " + displayMovie[i] + "; i:" + i);
+            }
+        }   // End for loop i
 
-        hangman();
-    }
-    else if (wins === 0) {
-        // ojo
-        console.log("Invoke displayStats() after loosing...");
-        alert("Invoke displayStats() after loosing...");
+        arrLength = 0;
+        diffLetters = 0;
+        strGuessedLetters = "";
+        strEqualLetters = "";
 
-        displayStats();
+        arrLength = guessedLetters.length;
+        console.log("arrLength: " + arrLength);
+        for (var j = 0; j < arrLength; j++) {
+            console.log("For loop j: " + j);
 
-        // ojo
-        console.log("Invoke displayGameOver() after loosing...");
-        alert("Invoke displayGameOver() after loosing...");
+            if (userLetter !== guessedLetters[j]) {
+                diffLetters++;
+                console.log("diffLetters: " + diffLetters);
+            }
+        }
 
-        displayGameOver();
-    }
-}
+        if (diffLetters === arrLength) {
+            console.log("diffLetters" + diffLetters + "; arrLength: " + arrLength);
 
-function displayGameOver() {
-    console.log("displayGameOver() executed");
-    alert("Game Over!");
-}
+            guessedLetters.push(userLetter);
+            strGuessedLetters = guessedLetters.join('');
+            console.log("strGuessedLetters: " + strGuessedLetters + "; guessedLetters.length: " + guessedLetters.length);
+            displayGuessedLetters.push(userLetter);
+            console.log("if displayGuessedLetters.length: " + displayGuessedLetters.length);
+        }
 
-// MAIN PROCESS
-// ==============================================================================
+        strGuessedLetters = guessedLetters.join('');
+        console.log("strGuessedLetters.length: " + strGuessedLetters.length + "; strGuessedLetters: " + strGuessedLetters);
 
-console.log("Invoke hangman() for the first time...");
-alert("Invoke hangman() for the first time...");
+        strEqualLetters = getUniqueCharacters(guessedMovie);
+        console.log("strEqualLetters.length: " + strEqualLetters.length + "; strEqualLetters: " + strEqualLetters);
 
-hangman();
+        numGuessesLeft = maxGuessedLetters - (strGuessedLetters.length - strEqualLetters.length);
+        console.log("numGuessesLeft: " + numGuessesLeft + "; strGuessedLetters.length: " + strGuessedLetters.length + "; strEqualLetters.length: " + strEqualLetters.length);
+
+        strGuessedMovie = guessedMovie.join('');
+        console.log("strGuessedMovie.length: " + strGuessedMovie.length + "; strGuessMovie: " + strGuessedMovie);
+
+        if (strGuessedMovie === compMovie) {
+            numGuessesLeft = 12;
+            console.log("G A N E !!!");
+        } else {
+            if (numGuessesLeft === 0) {
+                console.log("P E R D I !!!");
+            }
+        }
+    }   // End else isCapsLetter
+}   // End onkeyup event
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
 
