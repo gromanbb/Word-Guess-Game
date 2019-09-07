@@ -36,10 +36,10 @@ var strEqualLetters = "";
 function displayStats() {
     console.log("displayStats()--> Function executed");
 
-    document.querySelector("#pWins").innerHTML = "<h5>Wins: " + wins + "</h5>";
+    document.querySelector("#pWins").innerHTML = "<h5>Wins: " + score + "</h5>";
     document.querySelector("#pCurrentWord").innerHTML = "<h5>Current Word:  " + strGuessedMovie + "</h5>";
     document.querySelector("#pGuessesLeft").innerHTML = "<h5>Number of guesses remaining: " + numGuessesLeft + "</h5>";
-    document.querySelector("#pLettersGuessed").innerHTML = "<h5>Letters already guessed: " + wins + "</h5>";
+    document.querySelector("#pLettersGuessed").innerHTML = "<h5>Letters already guessed: " + strGuessedLetters + "</h5>";
 
 }
 
@@ -132,12 +132,17 @@ function validateGuessedMovie() {
             console.log("numGuessesLeft: " + numGuessesLeft + "; strGuessedLetters.length: " + strGuessedLetters.length + "; strEqualLetters.length: " + strEqualLetters.length);
 
             strGuessedMovie = guessedMovie.join('');
-            console.log("strGuessedMovie.length: " + strGuessedMovie.length + "; strGuessMovie: " + strGuessedMovie);
+            console.log("strGuessedMovie.length: " + strGuessedMovie.length + "; strGuessedMovie: " + strGuessedMovie);
+
+            displayStats();
 
             if (strGuessedMovie === compMovie) {
+                console.log("strGuessedMovie: " + strGuessedMovie + "; compMovie: " + compMovie);
                 wins++;
+                console.log("wins: " + wins);
                 score = score + wins;
-                numGuessesLeft = 12;
+                console.log("score: " + score);
+                return;
             } else {
                 if (numGuessesLeft === 0) {
                     wins = 0;
@@ -165,6 +170,11 @@ function hangman() {
         celebrateWin();
         console.log("hangman()--> Invoked celebrateWin()...");
 
+        displayStats();
+
+        wins = 0;
+        numGuessesLeft = 12;
+        strGuessedMovie = "";
         hangman();
     }
     else if (wins === 0) {
@@ -183,6 +193,8 @@ function displayGameOver() {
 
 function celebrateWin() {
     console.log("celebrateWin()--> Function executed...");
+
+    document.querySelector("#divimage").innerHTML = '<img src="assets/images/' + strGuessedMovie + '.jpg">';
 }
 
 // Retrieve unique characters from string
