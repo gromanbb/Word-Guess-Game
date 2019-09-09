@@ -3,7 +3,7 @@
 
 var disneyMovies = ["ZOOTOPIA", "MOANA", "TANGLED", "ALLADIN", "BRAVE", "INCREDIBLES", "MULAN", "RATATOUILLE", "HERCULES", "CINDERELLA", "POCAHONTAS", "ARISTOCATS", "PINOCCHIO", "FANTASIA", "MALEFICENT", "BAMBI", "PLANES", "FROZEN", "TARZAN"]
 
-var score= 0;
+var score = 0;
 var wins = 0;
 var displayWins = [];
 var strDivImage = "";
@@ -30,6 +30,7 @@ var strGuessedMovie = "";
 var strGuessedLetters = "";
 var strEqualLetters = "";
 
+var liveGame = false;
 
 // FUNCTIONS
 // ==============================================================================
@@ -58,12 +59,13 @@ function pickRandomMovie() {
         guessedMovie[i] = "_";
         //console.log("pickRandomMovie()-->  guessedMovie[" + i + "]: " + guessedMovie[i]);
     }
+    liveGame = true;
 }
 
-function validateGuessedMovie() {
-    //console.log("validateGuessedMovie()--> Function executed.");
 
-    document.onkeyup = function (event) {
+
+document.onkeyup = function (event) {
+    if (liveGame) {
         console.log("onkeyup event!");
 
         userLetter = event.key.toUpperCase();
@@ -119,10 +121,10 @@ function validateGuessedMovie() {
 
             if (strGuessedMovie === compMovie) {
                 //console.log("strGuessedMovie: " + strGuessedMovie + "; compMovie: " + compMovie);
-                
+
                 wins++;
                 //console.log("wins: " + wins);
-                
+
                 score = score + wins;
                 console.log("score: " + score);
             } else {
@@ -131,8 +133,11 @@ function validateGuessedMovie() {
                 }
             }
         }   // End else isCapsLetter
-    }   // End onkeyup event
-}
+
+    }
+
+
+}   // End onkeyup event
 
 function hangman() {
 
@@ -181,11 +186,11 @@ function getUniqueCharacters(str) {
 
 // Validate string is a letter from A-Z
 function isLetter(letterAZ) {
-    if (letterAZ === "A" || letterAZ === "B" || letterAZ === "C" || letterAZ === "D" || letterAZ === "E" || 
-        letterAZ === "F" || letterAZ === "G" || letterAZ === "H" || letterAZ === "I" || letterAZ === "J" || 
-        letterAZ === "K" || letterAZ === "L" || letterAZ === "M" || letterAZ === "N" || letterAZ === "O" || 
-        letterAZ === "P" || letterAZ === "Q" || letterAZ === "R" || letterAZ === "S" || letterAZ === "T" || 
-        letterAZ === "U" || letterAZ === "V" || letterAZ === "W" || letterAZ === "X" || letterAZ === "Y" || 
+    if (letterAZ === "A" || letterAZ === "B" || letterAZ === "C" || letterAZ === "D" || letterAZ === "E" ||
+        letterAZ === "F" || letterAZ === "G" || letterAZ === "H" || letterAZ === "I" || letterAZ === "J" ||
+        letterAZ === "K" || letterAZ === "L" || letterAZ === "M" || letterAZ === "N" || letterAZ === "O" ||
+        letterAZ === "P" || letterAZ === "Q" || letterAZ === "R" || letterAZ === "S" || letterAZ === "T" ||
+        letterAZ === "U" || letterAZ === "V" || letterAZ === "W" || letterAZ === "X" || letterAZ === "Y" ||
         letterAZ === "Z") {
         return true;
     } else {
