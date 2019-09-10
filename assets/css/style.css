@@ -17,26 +17,31 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4,
+h5,
+h6 {
   /* Typography */
   font-family: Georgia, Times, "Times New Roman", serif;
   font-weight: 700;
-  color: darkblue;
 }
 
 h1 {
   /* Typography */
   font-size: 35px;
   line-height: 35px;
+  color: darkblue;
 }
 
 h2,
 h3 {
   font-size: 28px;
+  color: darkblue;
 }
 
 h5 {
-  font-size: 20px;  
+  font-size: 20px;
+  color: darkred;
 }
 
 p {
