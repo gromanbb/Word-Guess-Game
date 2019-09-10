@@ -60,7 +60,7 @@ function pickRandomMovie() {
         displayMovie[i] = "_" + " ";
         // console.log("pickRandomMovie()-->  displayMovie[" + i + "]: " + displayMovie[i]);
     }
-    strDisplayMovie = displayMovie.join("");
+
 }
 
 function displayGameOver() {
@@ -98,10 +98,13 @@ function isLetter(letterAZ) {
 console.log("Main--> Start game!");
 
 pickRandomMovie();
+strDisplayMovie = displayMovie.join("");
 displayStats();
+
 
 document.onkeyup = function (event) {
     if (liveGame) {
+        document.querySelector("#divImage").innerHTML = '<img src="">';
         // console.log("onkeyup event!");
         
         userLetter = event.key.toUpperCase();
@@ -112,7 +115,7 @@ document.onkeyup = function (event) {
         if (!isCapsLetter) {
             console.log("Only letters are allowed. Try again!");
         } else {
-            document.querySelector("#divImage").innerHTML = '<img src="">';
+
             for (var i = 0; i < compMovie.length; i++) {
                 if (userLetter === compMovie[i]) {
                     guessedMovie[i] = userLetter;
@@ -148,18 +151,18 @@ document.onkeyup = function (event) {
             numGuessesLeft = maxGuessedLetters - (strGuessedLetters.length - strEqualLetters.length);
             // console.log("numGuessesLeft: " + numGuessesLeft + "; strGuessedLetters.length: " + strGuessedLetters.length + "; strEqualLetters.length: " + strEqualLetters.length);
 
+            strDisplayMovie = displayMovie.join("");        
             displayStats();
 
             if (strGuessedMovie === compMovie) {
                 wins++;
                 score = score + wins;
-
-                displayStats();
                 document.querySelector("#divImage").innerHTML = '<img src="assets/images/' + strGuessedMovie + '.jpg">';
 
                 wins = 0;
                 numGuessesLeft = 12;
                 guessedLetters = [];
+                guessedMovie = [];
                 displayMovie = [];
                 strGuessedLetters = "";
                 strEqualLetters = "";
@@ -168,6 +171,7 @@ document.onkeyup = function (event) {
 
                 pickRandomMovie();
                 displayStats();
+                strDisplayMovie = displayMovie.join("");
             
             } else {
                 if (numGuessesLeft === 0) {
@@ -178,7 +182,10 @@ document.onkeyup = function (event) {
                     liveGame = false;
                 }
             }   // End else strGuessedMovie
+
         }   // End else isCapsLetter
+
     }   // End liveGame
+
 }   // End onkeyup event
 
