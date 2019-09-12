@@ -11,8 +11,8 @@ var compMovie = "";
 var guessedMovie = [];
 var displayMovie = [];
 
-var maxGuessedLetters = 12;
-var numGuessesLeft = 12;
+var maxGuessedLetters = 7;
+var numGuessesLeft = 7;
 
 var userLetter = "";
 var isCapsLetter = false;
@@ -63,10 +63,16 @@ function pickRandomMovie() {
 
 }
 
+function celebrateWin() {
+    console.log("celebrateWin()--> Function executed");
+
+    alert("You won!!!");
+}
+
 function displayGameOver() {
     console.log("displayGameOver()--> Function executed");
 
-    alert("You lost!");
+    alert("You lost! The movie was: " + compMovie);
 }
 
 // Retrieve unique characters from string
@@ -137,6 +143,9 @@ document.onkeyup = function (event) {
                 if (userLetter !== guessedLetters[j]) {
                     diffLetters++;
                 }
+                else {
+                    alert("You already typed the letter --> " + userLetter + "!");
+                }
             }
 
             if (diffLetters === arrLength) {
@@ -159,8 +168,11 @@ document.onkeyup = function (event) {
                 score = score + wins;
                 document.querySelector("#divImage").innerHTML = '<img src="assets/images/' + strGuessedMovie + '.jpg">';
 
+                displayStats();
+                celebrateWin();
+
                 wins = 0;
-                numGuessesLeft = 12;
+                numGuessesLeft = maxGuessedLetters;
                 guessedLetters = [];
                 guessedMovie = [];
                 displayMovie = [];
@@ -171,13 +183,13 @@ document.onkeyup = function (event) {
 
                 pickRandomMovie();
                 displayStats();
-                strDisplayMovie = displayMovie.join("");
             
             } else {
                 if (numGuessesLeft === 0) {
                     wins = 0;
 
                     displayStats();
+                    document.querySelector("#divImage").innerHTML = '<img src="assets/images/' + compMovie + '.jpg">';
                     displayGameOver();
                     liveGame = false;
                 }
