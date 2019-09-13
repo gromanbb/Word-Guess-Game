@@ -1,7 +1,7 @@
 // VARIABLES
 // ==============================================================================
 
-var disneyMovies = ["ZOOTOPIA", "INCREDIBLES", "HERCULES", "POCAHONTAS", "MOANA", "RATATOUILLE", "MALEFICENT", "MULAN", "TANGLED", "CINDERELLA", "PINOCCHIO", "ALLADIN", "PLANES", "FANTASIA", "ARISTOCATS", "FROZEN",  "TARZAN", "BAMBI", "BRAVE"]
+var disneyMovies = ["ZOOTOPIA", "INCREDIBLES", "HERCULES", "POCAHONTAS", "MOANA", "RATATOUILLE", "MALEFICENT", "MULAN", "TANGLED", "CINDERELLA", "PINOCCHIO", "ALLADIN", "PLANES", "FANTASIA", "ARISTOCATS", "FROZEN",  "TARZAN", "BAMBI", "BRAVE"];
 
 var score = 0;
 var wins = 0;
@@ -48,7 +48,7 @@ function pickRandomMovie() {
     displayMovie = [];
     strDisplayMovie = "";
 
-    compIndex = Math.floor(Math.random() * disneyMovies.length);
+    compIndex = Math.floor(Math.random() * (disneyMovies.length - compIndex + 1)) + compIndex;
     compMovie = disneyMovies[compIndex];
     console.log("pickRandomMovie()--> compIndex: " + compIndex);
     console.log("pickRandomMovie()--> Picked Movie: " + compMovie);
